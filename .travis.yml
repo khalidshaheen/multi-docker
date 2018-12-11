@@ -16,10 +16,18 @@ after_success:
   - docker build -t khalidshaheen/multi-worker ./worker
   # Log in to docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  # Take those images and push them to docker hub
-  - docker push khalidshaheen/multi-client
-  - docker push khalidshaheen/multi-nginx
-  - docker push khalidshaheen/multi-server
-  - docker push khalidshaheen/multi-worker
+
+  # Tagging the image to enable syncing the images
+  # from travis-ci/khalidshaheen to docker "kshaheen"
+  - docker tag khalidshaheen/multi-client kshaheen/multi-client
+  - docker tag khalidshaheen/multi-nginx kshaheen/multi-nginx
+  - docker tag khalidshaheen/multi-server kshaheen/multi-server
+  - docker tag khalidshaheen/multi-worker kshaheen/multi-worker
   
-  # Test
+
+  # Take those images and push them to docker hub
+  - docker push kshaheen/multi-client
+  - docker push kshaheen/multi-nginx
+  - docker push kshaheen/multi-server
+  - docker push kshaheen/multi-worker
+  
